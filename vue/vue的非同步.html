@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 220px;
+        }
+        h1{
+            font-size: 18px;
+        }
+        .book{
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            width: 220px;
+            height: 400px;
+            display: inline-block;
+            margin: 5px;
+            padding: 5px;
+
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    <script src="http://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- html-dom -->
+        <div v-for="book in books" class="book">
+            <a :href="book.url">
+                <img :src="book.image" alt="">
+            </a>
+            <h1>{{book.title}}</h1>
+            <p>{{book.author}}</p>
+        </div>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    books: [],
+                }
+            },
+            mounted() {
+                // jQuery
+                // $.getJSON('../bookData.json', function(res){} )
+                // $.getJSON('../bookData.json', res => {} )
+                // $.getJSON('../bookData.json').then(res =>{
+                //     console.log(res);
+                //     this.books = res;
+                // })
+                //ajax()
+
+                // Axios
+                    // axios.get('../bookData.json').then(res =>{
+                    //     console.log(res.data);
+                    //     this.books = res.data;
+                    // })
+
+                // fetch
+                fetch('../bookData.json')
+                .then(res =>
+                    // console.log(res)
+                    // console.log(res.json())
+                    res.json()
+                ).then(res =>{
+                    console.log(res)
+                    this.books = res;
+                })
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
